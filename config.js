@@ -1,0 +1,57 @@
+{
+    "DESIGN_NAME": "top",
+    "VERILOG_FILES": [
+        "dir::precompute.sv",
+        "dir::top.sv",
+        "dir::matmul.sv",
+        "dir::mac.sv",
+        "dir::mem.sv",
+        "dir::input_hex.sv",
+        "dir::output_hex.sv"
+    ],
+    "CLOCK_PORT": "clk",
+    "CLOCK_PERIOD": 10.0,
+    "PNR_SDC_FILE": "dir::src/impl.sdc",
+    "SIGNOFF_SDC_FILE": "dir::src/signoff.sdc",
+    "FP_PIN_ORDER_CFG": "dir::src/pin_order.cfg",
+
+    "pdk::sky130*": {
+        "STD_CELL_LIBRARY": "sky130_fd_sc_hd"
+    },
+
+    "FP_CORE_UTIL": 40,
+    "PL_TARGET_DENSITY_PCT": 65,
+
+    "FP_PDN_VOFFSET": 5,
+    "FP_PDN_HOFFSET": 5,
+    "FP_PDN_VWIDTH": 2,
+    "FP_PDN_HWIDTH": 2,
+    "FP_PDN_VPITCH": 30,
+    "FP_PDN_HPITCH": 30,
+    "FP_PDN_SKIPTRIM": true,
+
+    "SYNTH_STRATEGY": "DELAY 0",
+    "SYNTH_MAX_FANOUT": 8,
+    "SYNTH_BUFFERING": true,
+    "SYNTH_SIZING": true,
+
+    "MAX_TRANSITION_CONSTRAINT": 0.5,
+    "MAX_CAPACITANCE_CONSTRAINT": 0.2,
+
+    "PL_REPAIR_TIMING": true,
+    "GLB_REPAIR_TIMING": true,
+
+    "GRT_REPAIR_ANTENNAS": true,
+    "DRT_REPAIR_ANTENNAS": true,
+    "PL_REPAIR_ANTENNAS": true,
+
+    "DIODE_CELL": "sky130_fd_sc_hd__diode_2",
+    "DIODE_CELL_PIN": "DIODE",
+    "DIODE_INSERTION_STRATEGY": 4,
+
+    "GRT_ANTENNA_ITERS": 50,
+    "DRT_ANTENNA_DROP_MODE": 1,
+    "DRT_OPT_ITERS": 100,
+
+    "RT_MAX_LAYER": "met4"
+}
