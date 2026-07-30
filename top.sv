@@ -22,7 +22,6 @@ module top #(
 );
 
     // Precomputed 3x3 color-correction matrix
-    localparam m3x3_q412 MODESELECT = m_precompute(MODE);
 
     // ------------------------------------------------------------------
     // TIMING FIX
@@ -39,6 +38,7 @@ module top #(
 
     // input_hex relevant variables
     logic [15:0]    width, height;
+    /* verilator lint_off UNUSEDSIGNAL */
     logic [31:0]    total_pixels;
     logic           ib_out_done, ib_out_valid; 
     rgb_vect_q1014  ib_out_pixel_rgbvect; 
@@ -57,6 +57,7 @@ module top #(
     logic [NUM_MATMULS-1:0]        matmul_done;
     rgb_vect_q1014                 matmul_ld_data [NUM_MATMULS];
     rgb_vect_pixel                 matmul_rd_data [NUM_MATMULS];
+    /* verilator lint_on UNUSEDSIGNAL */
 
     // Matmul outputs (internal wire routing)
     rgb_vect_pixel                 matmul_out_pixel_rgbvect;
@@ -202,8 +203,8 @@ module top #(
     end
 
     // FSM & Delay Counter
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (~rst_n) begin
+    always_ff @(posedge clk) begin
+        if (!rst_n) begin
             state        <= IDLE;
             done_latched <= 1'b0;
             delay_cnt    <= '0;

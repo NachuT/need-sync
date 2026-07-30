@@ -1,7 +1,8 @@
 `timescale 1ns/1ps
 
+/* verilator lint_off VARHIDDEN */
+/* verilator lint_off PROCASSINIT */
 /* verilator lint_off IMPORTSTAR */
-import precompute::*;
 /* verilator lint_on IMPORTSTAR */
 
 module output_hex (

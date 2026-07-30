@@ -6,14 +6,13 @@
         "dir::matmul.sv",
         "dir::mac.sv",
         "dir::mem.sv",
-        "dir::input_hex.sv",
-        "dir::output_hex.sv"
+        "dir::input_hex.sv"
     ],
     "CLOCK_PORT": "clk",
     "CLOCK_PERIOD": 10.0,
-    "PNR_SDC_FILE": "dir::src/impl.sdc",
-    "SIGNOFF_SDC_FILE": "dir::src/signoff.sdc",
-    "FP_PIN_ORDER_CFG": "dir::src/pin_order.cfg",
+    "PNR_SDC_FILE": "dir::impl.sdc",
+    "SIGNOFF_SDC_FILE": "dir::signoff.sdc",
+    "FP_PIN_ORDER_CFG": "dir::pin_order.cfg",
 
     "pdk::sky130*": {
         "STD_CELL_LIBRARY": "sky130_fd_sc_hd"
@@ -53,5 +52,9 @@
     "DRT_ANTENNA_DROP_MODE": 1,
     "DRT_OPT_ITERS": 100,
 
-    "RT_MAX_LAYER": "met4"
+    "RT_MAX_LAYER": "met4",
+    "RUN_VERILATOR": 0,
+    "ROUTERS_THREADS": 12,
+    "USE_SYNLIG": true,
+    "SYNTH_THREADS": 12
 }

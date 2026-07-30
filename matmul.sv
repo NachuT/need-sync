@@ -9,8 +9,7 @@ module matmul #(
     parameter DW_A   = precompute::Q412_T,   
     parameter DW_B   = precompute::Q1014_T,   
     parameter ACC_W  = 44, 
-    parameter ADDR_W = (N > 1) ? $clog2(N) : 1, 
-    parameter precompute::m3x3_q412 M_PRECOMPUTE = precompute::m_precompute(1)
+    parameter ADDR_W = (N > 1) ? $clog2(N) : 1,
 ) (
     input  logic                            clk,
     input  logic                            rst_n,
@@ -25,6 +24,12 @@ module matmul #(
     input  logic [ADDR_W-1:0]               rd_addr,
     output precompute::rgb_vect_pixel       rd_data 
 );
+
+    logic signed [COLS-1:0][ROWS-1:0][DW-1:0] memory;
+
+    initial begin
+        memory = '0;
+    end 
 
     localparam IDLE = 1'b0, COMPUTE = 1'b1;
     logic state;
@@ -88,14 +93,11 @@ module matmul #(
         .clk(clk), .wr_en(a_wr_en), .wr_addr(a_wr_addr), .wr_data(a_wr_data), .rd_addr(a_rd_addr), .rd_data(a)
     );
 
-    mem #(.DW(DW_B), .ROWS(N), .COLS(1)) mem_b (
-        .clk(clk), .wr_en(b_wr_en), .wr_addr('0), .wr_data(ld_data), .rd_addr('0), .rd_data(b)
-    );
-    
-    mem #(.DW(8), .ROWS(N), .COLS(1), .ADDR_W(ADDR_W)) mem_c (
-        .clk(clk), .wr_en(c_wr_en), .wr_addr(c_wr_addr), .wr_data(pixel_out_bus), .rd_addr(rd_addr), .rd_data(rd_data)
-    );
+    mem #(.DW(DW_B), .ROWS(N), .COLS(1))
+    mem_b (.clk(clk), .wr_en(b_wr_en), .wr_addr('0), .wr_data($unsigned(ld_data)), .rd_addr('0), .rd_data(b));
 
+    mem #(.DW(8), .ROWS(N), .COLS(1), .ADDR_W(ADDR_W))
+    mem_c (.clk(clk), .wr_en(c_wr_en), .wr_addr(c_wr_addr), .wr_data($unsigned(pixel_out_bus)), .rd_addr(rd_addr), .rd_data(rd_data));
 
     assign a_rd_addr = k;
     assign c_wr_addr = '0; 
